@@ -2,9 +2,9 @@ package com.himo.himoMod.GUIS;
 
 import java.io.IOException;
 
-import com.himo.himoMod.ShowHP;
+import com.himo.himoMod.ShowKill;
 import com.himo.himoMod.himoGUI;
-import com.himo.himoMod.AllSettings.ShowHPSet;
+import com.himo.himoMod.AllSettings.ShowKillSet;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -13,7 +13,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-public class ShowHPGUI extends GuiScreen {
+public class ShowKillGUI extends GuiScreen {
 
 	private GuiButton left_right1;
 	private GuiButton left_right2;
@@ -21,6 +21,7 @@ public class ShowHPGUI extends GuiScreen {
 	private GuiButton big_small2;
 	private GuiButton spesu1;
 	private GuiButton spesu2;
+	private GuiButton AssistKill;
 
 	@Override
 	public void initGui() {
@@ -30,36 +31,35 @@ public class ShowHPGUI extends GuiScreen {
 		left_right2 = new GuiButton(3, this.width / 2, this.height / 2 + 70, 60 , 20,"RIGHT");
 		spesu1 = new GuiButton(4, this.width / 2 + 80, this.height / 2 + 70, 60 , 20,"-");
 		spesu2 = new GuiButton(5, this.width / 2 + 140, this.height / 2 + 70, 60 , 20,"+");
+		AssistKill = new GuiButton(6, this.width / 2, this.height / 2 + 50, 60 , 20,"ShowAssistGUI");
 
-		switch(ShowHP.HPbigsmall) {
-		case ShowHPSet.HPbig:
+		switch(ShowKill.Killbigsmall) {
+		case ShowKillSet.Killbig:
 			big_small1.displayString = "§l§n§aBIG";
 			big_small2.displayString = "§7SMALL";
 			break;
-		case ShowHPSet.HPsmall:
+		case ShowKillSet.Killsmall:
 			big_small1.displayString = "§7BIG";
 			big_small2.displayString = "§l§n§aSMALL";
 			break;
 		}
-		switch(ShowHP.HPleftright) {
-		case ShowHPSet.HPleft:
+		switch(ShowKill.Killleftright) {
+		case ShowKillSet.Killleft:
 			left_right1.displayString = "§l§n§aLEFT";
 			left_right2.displayString = "§7SRIGHT";
 			break;
-		case ShowHPSet.HPright:
+		case ShowKillSet.Killright:
 			left_right1.displayString = "§7LEFT";
 			left_right2.displayString = "§l§n§aSRIGHT";
 			break;
 		}
-
-
 
 		addButtons();
 	}
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		Minecraft.getMinecraft().fontRendererObj.drawString("" + ShowHP.HPspesu, this.width / 2 - 155, this.height / 2 - 85, 0xffffffff, true);
+		Minecraft.getMinecraft().fontRendererObj.drawString("" + ShowKill.Killspesu, this.width / 2 - 155, this.height / 2 - 85, 0xffffffff, true);
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
@@ -84,43 +84,47 @@ public class ShowHPGUI extends GuiScreen {
 		himoGUI.saveConfig();
 		super.onGuiClosed();
 	}
+
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
 		if(button.id == 0) {
-			ShowHP.HPbigsmall = ShowHPSet.HPbig;
+			ShowKill.Killbigsmall = ShowKillSet.Killbig;
 			big_small1.displayString = "§l§n§aBIG";
 			big_small2.displayString = "§7SMALL";
-			ShowHP.playShowHPGUI(19, "19");
+			ShowKill.playShowKillGUI();
 		}
 		if(button.id == 1) {
-			ShowHP.HPbigsmall = ShowHPSet.HPsmall;
+			ShowKill.Killbigsmall = ShowKillSet.Killsmall;
 			big_small1.displayString = "§7BIG";
 			big_small2.displayString = "§l§n§aSMALL";
-			ShowHP.playShowHPGUI(19, "19");
+			ShowKill.playShowKillGUI();
 		}
 		if(button.id == 2) {
-			ShowHP.HPleftright = ShowHPSet.HPleft;
+			ShowKill.Killleftright = ShowKillSet.Killleft;
 			left_right1.displayString = "§l§n§aLEFT";
 			left_right2.displayString = "§7SRIGHT";
-			ShowHP.playShowHPGUI(19, "19");
+			ShowKill.playShowKillGUI();
 		}
 		if(button.id == 3) {
-			ShowHP.HPleftright = ShowHPSet.HPright;
+			ShowKill.Killleftright = ShowKillSet.Killright;
 			left_right1.displayString = "§7LEFT";
 			left_right2.displayString = "§l§n§aSRIGHT";
-			ShowHP.playShowHPGUI(19, "19");
+			ShowKill.playShowKillGUI();
 		}
 		if(button.id == 4) {
-			if (ShowHP.HPspesu != 0) {
-			ShowHP.HPspesu = ShowHP.HPspesu - 1;
+			if (ShowKill.Killspesu != 0) {
+			ShowKill.Killspesu = ShowKill.Killspesu - 1;
 			}
-			ShowHP.playShowHPGUI(19, "19");
+			ShowKill.playShowKillGUI();
 		}
 		if(button.id == 5) {
-			if (ShowHP.HPspesu != 40) {
-			ShowHP.HPspesu = ShowHP.HPspesu + 1;
+			if (ShowKill.Killspesu != 40) {
+			ShowKill.Killspesu = ShowKill.Killspesu + 1;
 			}
-			ShowHP.playShowHPGUI(19, "19");
+			ShowKill.playShowKillGUI();
+		}
+		if(button.id == 6) {
+			new ShowAssistGUI().display();
 		}
 	}
 
@@ -131,6 +135,7 @@ public class ShowHPGUI extends GuiScreen {
 		buttonList.add(left_right2);
 		buttonList.add(spesu1);
 		buttonList.add(spesu2);
+		buttonList.add(AssistKill);
 	}
 	@Override
 	public void updateScreen() {

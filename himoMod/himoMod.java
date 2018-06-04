@@ -6,8 +6,12 @@ import java.io.FileOutputStream;
 import java.util.Properties;
 
 import com.himo.himoMod.AllSettings.KillSoundSet;
+import com.himo.himoMod.AllSettings.PerunCDSet;
+import com.himo.himoMod.AllSettings.ShowAssistSet;
 import com.himo.himoMod.AllSettings.ShowHPSet;
+import com.himo.himoMod.AllSettings.ShowKillSet;
 import com.himo.himoMod.AllSettings.ShowUseHeadSet;
+import com.himo.himoMod.GUIS.PerunCDGUI;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
@@ -36,15 +40,32 @@ public class himoMod {
 	public void init(FMLInitializationEvent event) {
 		System.out.println("himodesu");
 		MinecraftForge.EVENT_BUS.register(this);
+		AimDisplay.taima1();
+		AimDisplay.kousinn1();
 		ClientCommandHandler.instance.registerCommand(new himoGUICommand());
 		if(!propertiesFile.exists()) {//フォルダがなかったら
 			try {
 				propertiesFile.createNewFile();//生成
 				properties.setProperty("killSound", String.valueOf(KillSoundSet.ON));//killSoundという値にKillSoundSetのONという値を入れる
 				properties.setProperty("showUseHead", String.valueOf(ShowUseHeadSet.ON));//showUseHeadという値にShowUseHeadSetのONという値を入れる
+				properties.setProperty("ShowHPOF", String.valueOf(ShowHPSet.ON));
 				properties.setProperty("HPbigsmall", String.valueOf(ShowHPSet.HPsmall));//showUseHeadという値にShowUseHeadSetのONという値を入れる
 				properties.setProperty("HPleftright", String.valueOf(ShowHPSet.HPright));//HPleftrightという値にShowHPSetのHPrightという値を入れる
 				properties.setProperty("HPspesu", String.valueOf(ShowHPSet.HPspesu));//HPrightsという値にShowHPSetのHPrightsという値を入れる
+				properties.setProperty("ShowKillOF", String.valueOf(ShowKillSet.ON));
+				properties.setProperty("Killbigsmall", String.valueOf(ShowKillSet.Killsmall));//showUseHeadという値にShowUseHeadSetのONという値を入れる
+				properties.setProperty("Killleftright", String.valueOf(ShowKillSet.Killright));//HPleftrightという値にShowHPSetのHPrightという値を入れる
+				properties.setProperty("Killspesu", String.valueOf(ShowKillSet.Killspesu));//HPrightsという値にShowHPSetのHPrightsという値を入れる
+				properties.setProperty("ShowAssistOF", String.valueOf(ShowAssistSet.ON));
+				properties.setProperty("Assistbigsmall", String.valueOf(ShowAssistSet.Assistsmall));//showUseHeadという値にShowUseHeadSetのONという値を入れる
+				properties.setProperty("Assistleftright", String.valueOf(ShowAssistSet.Assistright));//HPleftrightという値にShowHPSetのHPrightという値を入れる
+				properties.setProperty("Assistspesu", String.valueOf(ShowAssistSet.Assistspesu));
+
+				properties.setProperty("PerunOF", String.valueOf(PerunCDSet.ON));
+				properties.setProperty("Perunx", String.valueOf(PerunCDSet.x));
+				properties.setProperty("Peruny", String.valueOf(PerunCDSet.y));
+				properties.setProperty("Perunscale", String.valueOf(PerunCDSet.scale));
+
 				properties.store(new FileOutputStream(propertiesFile), "Dont change it!");
 			} catch(Exception e) {
 				e.printStackTrace();
@@ -54,9 +75,24 @@ public class himoMod {
 			properties.load(new FileInputStream(propertiesFile));
 			killSound = Integer.valueOf(properties.getProperty("killSound","0"));//killSoundにpropertiesのkillSoundの値を導入
 			showUseHead = Integer.valueOf(properties.getProperty("showUseHead","0"));//showUseHeadにpropertiesのshowUseHeadの値を導入
+			ShowHP.ShowHPOF = Integer.valueOf(properties.getProperty("ShowHPOF","0"));
 			ShowHP.HPbigsmall = Integer.valueOf(properties.getProperty("HPbigsmall","0"));
 			ShowHP.HPleftright = Integer.valueOf(properties.getProperty("HPleftright","0"));
-			ShowHP.HPspesu = Integer.valueOf(properties.getProperty("HPspesu","0"));//ShowHP.HPleftrightにpropertiesのHPleftrightの値を導入
+			ShowHP.HPspesu = Integer.valueOf(properties.getProperty("HPspesu","0"));
+			ShowKill.ShowKillOF = Integer.valueOf(properties.getProperty("ShowKillOF","0"));
+			ShowKill.Killbigsmall = Integer.valueOf(properties.getProperty("Killbigsmall","0"));
+			ShowKill.Killleftright = Integer.valueOf(properties.getProperty("Killleftright","0"));
+			ShowKill.Killspesu = Integer.valueOf(properties.getProperty("Killspesu","0"));//ShowHP.HPleftrightにpropertiesのHPleftrightの値を導入
+			ShowAssist.ShowAssistOF = Integer.valueOf(properties.getProperty("ShowAssistOF","0"));
+			ShowAssist.Assistbigsmall = Integer.valueOf(properties.getProperty("Assistbigsmall","0"));
+			ShowAssist.Assistleftright = Integer.valueOf(properties.getProperty("Assistleftright","0"));
+			ShowAssist.Assistspesu = Integer.valueOf(properties.getProperty("Assistspesu","0"));
+
+			PerunCD.PerunCDOF = Integer.valueOf(properties.getProperty("PerunOF","0"));
+			PerunCD.x = Float.parseFloat(properties.getProperty("Perunx","0"));
+			PerunCD.y = Float.parseFloat(properties.getProperty("Peruny","0"));
+			PerunCD.scale = Double.parseDouble(properties.getProperty("Perunscale","0"));
+
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -75,6 +111,10 @@ public class himoMod {
 			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("§7 hi合ってるよ"));
 			KillSound.playKillSound();
 			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("" + killSound));
+			ShowKill.playShowKill();
+		}
+		if(message.contains("You have assisted killing ")) {//playKillSoundを起動
+			ShowAssist.playShowAssist();
 		}
 		if(message.contains(" ate a player head and you gained 7 seconds of Regeneration II!")) {//Head使ったときの文字が含まれているか
 			//playShowuseheadに誰が使ったかを受け渡す
@@ -91,9 +131,9 @@ public class himoMod {
 		if(message.contains(" is on ")) {//HPをShowHPにintで受け渡す
 			if(message.contains(" HP!")) {
 				String[] HPnukidasi = message.split(" ", 0);
-				float helth = Float.parseFloat(HPnukidasi[3]);
-				String helths = HPnukidasi[3];
-				ShowHP.playShowHP(helth, helths);
+				float health = Float.parseFloat(HPnukidasi[3]);
+				String healths = HPnukidasi[3];
+				ShowHP.playShowHP(health, healths);
 			}
 		}
 		if(message.contains(" is on ")) {//名前をStringでplayShowTeamMateに受け渡す
@@ -157,7 +197,6 @@ public class himoMod {
 				PerunCD.playstartPerunCD();
 				PerunCD.playstartPerunCDGO();
 			}
-
 		}
     }
 
@@ -165,5 +204,8 @@ public class himoMod {
 	public void onRenderGameOverlay(RenderGameOverlayEvent event) {
 		PerunCD.playPerunCD();
 		PerunCD.playPerunCDGO();
+		PerunCDGUI.testPerunCD();
+		ShowUHCKills.killsrender();
+		AimDisplay.playkaunnto();
 	}
 }

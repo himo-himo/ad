@@ -5,8 +5,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import com.himo.himoMod.AllSettings.KillSoundSet;
+import com.himo.himoMod.AllSettings.PerunCDSet;
+import com.himo.himoMod.AllSettings.ShowHPSet;
+import com.himo.himoMod.AllSettings.ShowKillSet;
 import com.himo.himoMod.AllSettings.ShowUseHeadSet;
+import com.himo.himoMod.GUIS.PerunCDGUI;
 import com.himo.himoMod.GUIS.ShowHPGUI;
+import com.himo.himoMod.GUIS.ShowKillGUI;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -41,11 +46,11 @@ public class himoGUI extends GuiScreen {
 		buttonShowTeamMate = new GuiButton(2, this.width / 2 + 80, this.height / 2 - 70, 120 , 20,"ON");
 
 		buttonPerunCD1 = new GuiButton(3, this.width / 2 - 200, this.height / 2 - 10, 59 , 20,"buttonPerunCD1");
-		buttonPerunCD2 = new GuiButton(4, this.width / 2 - 139, this.height / 2 - 10, 59 , 20,"buttonPerunCD2");
+		buttonPerunCD2 = new GuiButton(4, this.width / 2 - 139, this.height / 2 - 10, 59 , 20,"§bPosition");
 		buttonShowKill1 = new GuiButton(5, this.width / 2 - 60, this.height / 2 - 10, 59 , 20,"buttonShowKill1");
-		buttonShowKill2 = new GuiButton(6, this.width / 2 + 1, this.height / 2 - 10, 59 , 20,"buttonShowKill2");
+		buttonShowKill2 = new GuiButton(6, this.width / 2 + 1, this.height / 2 - 10, 59 , 20,"§bPosition");
 		buttonShowHP1 = new GuiButton(7, this.width / 2 + 80, this.height / 2 - 10, 59 , 20,"buttonShowHP1");
-		buttonShowHP2 = new GuiButton(8, this.width / 2 + 141, this.height / 2 - 10, 59 , 20,"buttonShowHP2");
+		buttonShowHP2 = new GuiButton(8, this.width / 2 + 141, this.height / 2 - 10, 59 , 20,"§bPosition");
 
 		buttonAutoKills1 = new GuiButton(9, this.width / 2 - 200, this.height / 2 + 50, 59 , 20,"buttonAutoKills1");
 		buttonAutoKills2 = new GuiButton(10, this.width / 2 - 139, this.height / 2 + 50, 59 , 20,"buttonAutoKills2");
@@ -67,6 +72,30 @@ public class himoGUI extends GuiScreen {
 			break;
 		case ShowUseHeadSet.ON:
 			buttonShowUseHead.displayString = "§aON";
+			break;
+		}
+		switch(ShowHP.ShowHPOF) {
+		case ShowHPSet.OFF:
+			buttonShowHP1.displayString = "§7OFF";
+			break;
+		case ShowHPSet.ON:
+			buttonShowHP1.displayString = "§aON";
+			break;
+		}
+		switch(ShowKill.ShowKillOF) {
+		case ShowKillSet.OFF:
+			buttonShowKill1.displayString = "§7OFF";
+			break;
+		case ShowKillSet.ON:
+			buttonShowKill1.displayString = "§aON";
+			break;
+		}
+		switch(PerunCD.PerunCDOF) {
+		case PerunCDSet.OFF:
+			buttonPerunCD1.displayString = "§7OFF";
+			break;
+		case PerunCDSet.ON:
+			buttonPerunCD1.displayString = "§aON";
 			break;
 		}
 		addButtons();
@@ -147,7 +176,49 @@ public class himoGUI extends GuiScreen {
 					break;
 			}
 		}
+		if(button.id == 3) {
+			switch(PerunCD.PerunCDOF) {
+				case PerunCDSet.OFF:
+					buttonPerunCD1.displayString = "§aON";
+					PerunCD.PerunCDOF = PerunCDSet.ON;
+					break;
+				case PerunCDSet.ON:
+					buttonPerunCD1.displayString = "§7OFF";
+					PerunCD.PerunCDOF = PerunCDSet.OFF;
+					break;
+			}
+		}
+		if(button.id == 4) {
+			new PerunCDGUI().display();
+		}
+		if(button.id == 5) {
+			switch(ShowKill.ShowKillOF) {
+			case ShowKillSet.OFF:
+				buttonShowKill1.displayString = "§aON";
+				ShowKill.ShowKillOF = ShowKillSet.ON;
+				break;
+			case ShowKillSet.ON:
+				buttonShowKill1.displayString = "§7OFF";
+				ShowKill.ShowKillOF = ShowKillSet.OFF;
+				break;
+			}
+		}
+		if(button.id == 6) {
+			new ShowKillGUI().display();
+		}
 		if(button.id == 7) {
+			switch(ShowHP.ShowHPOF) {
+			case ShowHPSet.OFF:
+				buttonShowHP1.displayString = "§aON";
+				ShowHP.ShowHPOF = ShowHPSet.ON;
+				break;
+			case ShowHPSet.ON:
+				buttonShowHP1.displayString = "§7OFF";
+				ShowHP.ShowHPOF = ShowHPSet.OFF;
+				break;
+			}
+		}
+		if(button.id == 8) {
 			new ShowHPGUI().display();
 		}
 	}
@@ -161,9 +232,23 @@ public class himoGUI extends GuiScreen {
 			himoMod.properties.load(new FileInputStream(himoMod.propertiesFile));
 			himoMod.properties.setProperty("killSound", String.valueOf(himoMod.killSound));
 			himoMod.properties.setProperty("showUseHead", String.valueOf(himoMod.showUseHead));
+			himoMod.properties.setProperty("ShowHPOF", String.valueOf(ShowHP.ShowHPOF));
 			himoMod.properties.setProperty("HPbigsmall", String.valueOf(ShowHP.HPbigsmall));
 			himoMod.properties.setProperty("HPleftright", String.valueOf(ShowHP.HPleftright));
 			himoMod.properties.setProperty("HPspesu", String.valueOf(ShowHP.HPspesu));
+			himoMod.properties.setProperty("ShowKillOF", String.valueOf(ShowKill.ShowKillOF));
+			himoMod.properties.setProperty("Killbigsmall", String.valueOf(ShowKill.Killbigsmall));
+			himoMod.properties.setProperty("Killleftright", String.valueOf(ShowKill.Killleftright));
+			himoMod.properties.setProperty("Killspesu", String.valueOf(ShowKill.Killspesu));
+			himoMod.properties.setProperty("ShowAssistOF", String.valueOf(ShowAssist.ShowAssistOF));
+			himoMod.properties.setProperty("Assistbigsmall", String.valueOf(ShowAssist.Assistbigsmall));
+			himoMod.properties.setProperty("Assistleftright", String.valueOf(ShowAssist.Assistleftright));
+			himoMod.properties.setProperty("Assistspesu", String.valueOf(ShowAssist.Assistspesu));
+
+			himoMod.properties.setProperty("PerunOF", String.valueOf(PerunCD.PerunCDOF));
+			himoMod.properties.setProperty("Perunx", String.valueOf(PerunCD.x));
+			himoMod.properties.setProperty("Peruny", String.valueOf(PerunCD.y));
+			himoMod.properties.setProperty("Perunscale", String.valueOf(PerunCD.scale));
 			himoMod.properties.store(new FileOutputStream(himoMod.propertiesFile), "Dont change it!");
 		} catch(IOException e) {
 			e.printStackTrace();

@@ -1,39 +1,38 @@
 package com.himo.himoMod;
 
-import com.himo.himoMod.AllSettings.ShowHPSet;
+import com.himo.himoMod.AllSettings.ShowAssistSet;
 
 import net.minecraft.client.Minecraft;
 
-public class ShowHP {
-	public static int ShowHPOF;
-	public static int HPbigsmall;
-	public static int HPleftright;
-	public static int HPspesu;
-	public static String HPColour;
+public class ShowAssist {
+	public static int ShowAssistOF;
+	public static int Assistbigsmall;
+	public static int Assistleftright;
+	public static int Assistspesu;
 	public static String supesu;
 	public static String[] supesuhairetu = {"", " ", "  ", "   ", "    ", "     ", "      ", "       ", "        ", "         ", "          ", "           ", "            ", "             ", "              ", "               ", "                ", "                 ", "                  ", "                   ", "                    ", "                     ", "                      ", "                       ", "                        ", "                         ", "                              ", "                                   ", "                                        ", "                                             ", "                                                  ", "                                                       ", "                                                            ", "                                                                 ", "                                                                      ", "                                                                           ", "                                                                                ", "                                                                                     ", "                                                                                          ", "                                                                                               ", "                                                                                               ", "                                                                                                    "};
 
-	public static void playShowHP(float health, String healths) {
-		if (ShowHPOF == ShowHPSet.OFF) {
-		} else if (ShowHPOF == ShowHPSet.ON) {
-			switch(HPbigsmall) {
-			case ShowHPSet.HPbig:
-				switch(HPleftright) {
-				case ShowHPSet.HPleft:
-					playShowHPbigleft(health, healths);
+	public static void playShowAssist() {
+		if (ShowAssistOF == ShowAssistSet.OFF) {
+		} else if (ShowAssistOF == ShowAssistSet.ON) {
+			switch(Assistbigsmall) {
+			case ShowAssistSet.Assistbig:
+				switch(Assistleftright) {
+				case ShowAssistSet.Assistleft:
+					playShowAssistbigleft();
 				break;
-				case ShowHPSet.HPright:
-					playShowHPbigright(health, healths);
+				case ShowAssistSet.Assistright:
+					playShowAssistbigright();
 				break;
 				}
 			break;
-			case ShowHPSet.HPsmall:
-				switch(HPleftright) {
-				case ShowHPSet.HPleft:
-					playShowHPsmallleft(health, healths);
+			case ShowAssistSet.Assistsmall:
+				switch(Assistleftright) {
+				case ShowAssistSet.Assistleft:
+					playShowAssistsmallleft();
 				break;
-				case ShowHPSet.HPright:
-					playShowHPsmallright(health, healths);
+				case ShowAssistSet.Assistright:
+					playShowAssistsmallright();
 				break;
 				}
 			break;
@@ -42,67 +41,62 @@ public class ShowHP {
 		}
 	}
 
-	public static void playShowHPGUI(float health, String healths) {
-			switch(HPbigsmall) {
-			case ShowHPSet.HPbig:
-				switch(HPleftright) {
-				case ShowHPSet.HPleft:
-					playShowHPbigleft(health, healths);
+	public static void playShowAssistGUI() {
+			switch(Assistbigsmall) {
+			case ShowAssistSet.Assistbig:
+				switch(Assistleftright) {
+				case ShowAssistSet.Assistleft:
+					playShowAssistbigleft();
 				break;
-				case ShowHPSet.HPright:
-					playShowHPbigright(health, healths);
+				case ShowAssistSet.Assistright:
+					playShowAssistbigright();
 				break;
 				}
 			break;
-			case ShowHPSet.HPsmall:
-				switch(HPleftright) {
-				case ShowHPSet.HPleft:
-					playShowHPsmallleft(health, healths);
+			case ShowAssistSet.Assistsmall:
+				switch(Assistleftright) {
+				case ShowAssistSet.Assistleft:
+					playShowAssistsmallleft();
 				break;
-				case ShowHPSet.HPright:
-					playShowHPsmallright(health, healths);
+				case ShowAssistSet.Assistright:
+					playShowAssistsmallright();
 				break;
 				}
 			break;
 		}
 	}
 
-	public static void HPColourSet(float health) {
-		if (health <= 15) {
-			HPColour = "§r§c";
-		} else if (health <= 25){
-			HPColour = "§r§e";
-		} else {
-			HPColour = "§r§a";
-		}
-		supesu = supesuhairetu[HPspesu];
+	public static void supesutukuri() {
+		supesu = supesuhairetu[Assistspesu];
 	}
 
-	public static void playShowHPbigleft(float health, String healths) {
-		HPColourSet(health);
-		Minecraft.getMinecraft().ingameGUI.displayTitle(HPColour + healths + supesu, null, 0, 20, 5);
+
+	public static void playShowAssistbigleft() {
+		supesutukuri();
+		Minecraft.getMinecraft().ingameGUI.displayTitle("§7Assist" + supesu, null, 0, 20, 5);
 		Minecraft.getMinecraft().ingameGUI.displayTitle(null, "", 0, 0, 0);
 		Minecraft.getMinecraft().ingameGUI.displayTitle(null, null, 0, 20, 5);
 	}
 
-	public static void playShowHPbigright(float health, String healths) {
-		HPColourSet(health);
-		Minecraft.getMinecraft().ingameGUI.displayTitle(supesu + HPColour + healths, null, 0, 20, 5);
+	public static void playShowAssistbigright() {
+		supesutukuri();
+		Minecraft.getMinecraft().ingameGUI.displayTitle(supesu + "§7Assist", null, 0, 20, 5);
 		Minecraft.getMinecraft().ingameGUI.displayTitle(null, "", 0, 0, 0);
 		Minecraft.getMinecraft().ingameGUI.displayTitle(null, null, 0, 20, 5);
 	}
 
-	public static void playShowHPsmallleft(float health, String healths) {
-		HPColourSet(health);
+	public static void playShowAssistsmallleft() {
+		supesutukuri();
 		Minecraft.getMinecraft().ingameGUI.displayTitle("", null, 0, 20, 5);
-		Minecraft.getMinecraft().ingameGUI.displayTitle(null, HPColour + healths + supesu, 0, 0, 0);
+		Minecraft.getMinecraft().ingameGUI.displayTitle(null, "§7Assist" + supesu, 0, 0, 0);
 		Minecraft.getMinecraft().ingameGUI.displayTitle(null, null, 0, 20, 5);
 	}
 
-	public static void playShowHPsmallright(float health, String healths) {
-		HPColourSet(health);
+	public static void playShowAssistsmallright() {
+		supesutukuri();
 		Minecraft.getMinecraft().ingameGUI.displayTitle("", null, 0, 20, 5);
-		Minecraft.getMinecraft().ingameGUI.displayTitle(null,supesu + HPColour + healths, 0, 0, 0);
+		Minecraft.getMinecraft().ingameGUI.displayTitle(null,supesu + "§7Assist", 0, 0, 0);
 		Minecraft.getMinecraft().ingameGUI.displayTitle(null, null, 0, 20, 5);
 	}
+
 }

@@ -9,11 +9,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 
 public class PerunCD {
+	public static int PerunCDOF;
 	public static String text = "";
 	public static String textGO = "";
-	public static int x = 5;
-	public static int y = 5;
-	public static int scale = 5;
+	public static float x;
+	public static float y;
+	public static double scale;
+	public static boolean perun1 = true;
+	public static boolean perun2 = true;
 
 	public static void playPerunCD() {
 		GlStateManager.enableBlend();
@@ -24,6 +27,9 @@ public class PerunCD {
 		GlStateManager.pushMatrix();
 	}
 		public static void playstartPerunCD() throws ParseException {
+			if (!perun1) return;
+			if (PerunCDOF != 1) return;
+			perun1= false;
 			final Timer timer = new Timer(false);
 			TimerTask task = new TimerTask() {
 			String karakodo = "";
@@ -34,13 +40,13 @@ public class PerunCD {
 					cnt--;
 					if (cnt == 6 || cnt == 5) {
 						karakodo = "§f";
-						Minecraft.getMinecraft().thePlayer.playSound("random.orb", 100F, 1F);
+						Minecraft.getMinecraft().thePlayer.playSound("random.orb", 100, 1);
 					} else if (cnt == 4 || cnt == 3) {
 						karakodo = "§a";
-						Minecraft.getMinecraft().thePlayer.playSound("random.orb", 100F, 1F);
+						Minecraft.getMinecraft().thePlayer.playSound("random.orb", 100, 1);
 					} else if (cnt == 2 || cnt == 1) {
 						karakodo = "§c";
-						Minecraft.getMinecraft().thePlayer.playSound("random.orb", 100F, 1F);
+						Minecraft.getMinecraft().thePlayer.playSound("random.orb", 100, 1);
 					}
 					PerunCD.text = karakodo + cnt;
 					System.out.println(cnt);
@@ -48,6 +54,7 @@ public class PerunCD {
 					if ( cnt <= 0 ) {
 						PerunCD.text = "";
 						timer.cancel();
+						perun1= true;
 					}
 				}
 			};
@@ -64,6 +71,9 @@ public class PerunCD {
 		}
 
 		public static void playstartPerunCDGO() throws ParseException {
+			if (!perun2) return;
+			if (PerunCDOF != 1) return;
+			perun2 = false;
 			final Timer timer = new Timer(false);
 			TimerTask task = new TimerTask() {
 			String karakodo = "";
@@ -76,6 +86,7 @@ public class PerunCD {
 						karakodo = "§e";
 						PerunCD.textGO = karakodo + "GO";
 						Minecraft.getMinecraft().thePlayer.playSound("item.fireCharge.use", 100F, 1F);
+						perun2 = true;
 					}
 					//5回実行で停止
 					if ( cnt <= 0 ) {
