@@ -1,5 +1,7 @@
 package com.himo.himoMod;
 
+import com.himo.himoMod.AllSettings.ShowUHCKillsSet;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
 
@@ -10,21 +12,22 @@ public class ShowUHCKills {
 	static String[] uhcKiller = new String [ninn];
 	static int[] uhcKills = new int [ninn];
 
-	static String[] Stringp0karap5 = {"", "", "", "", "", ""};
-	static String[] intp0karap5 = {"0", "1", "2", "3", "4", "5", "6"};
+	public static String[] Stringp0karap5 = {"", "", "", "", "", ""};
+	public static String[] intp0karap5 = {"0", "1", "2", "3", "4", "5", "6"};
 
-	private static boolean isRender = true;
-	private static int x = 20;
-	private static int y = 0;
-	private static int migihidarimannaka = 0;
+	public static int leftorright;
+	public static int ShowUHCKillsOF;
+
+	public static int x = 200;
+	public static int y = 0;
 
 	public static void killsrender() {
-		if(!isRender) return;
+		if(ShowUHCKillsOF == ShowUHCKillsSet.OFF) return;
 		int integer = y;
 		int integerx = x;
 		for(int i=0; i< Stringp0karap5.length; i++){
-			if (migihidarimannaka == 0) {
-				integerx = x;
+			if (leftorright == 1) {
+				integerx = x - Minecraft.getMinecraft().fontRendererObj.getStringWidth(Stringp0karap5[i] + " " + intp0karap5[i]);
 			}
 			Minecraft.getMinecraft().fontRendererObj.drawString(Stringp0karap5[i] + " " + intp0karap5[i], integerx, integer, 0xffffffff, true);
 			integer += 10;

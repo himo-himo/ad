@@ -5,11 +5,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Properties;
 
+import com.himo.himoMod.AllSettings.AimDisplaySet;
 import com.himo.himoMod.AllSettings.KillSoundSet;
 import com.himo.himoMod.AllSettings.PerunCDSet;
 import com.himo.himoMod.AllSettings.ShowAssistSet;
 import com.himo.himoMod.AllSettings.ShowHPSet;
 import com.himo.himoMod.AllSettings.ShowKillSet;
+import com.himo.himoMod.AllSettings.ShowUHCKillsSet;
 import com.himo.himoMod.AllSettings.ShowUseHeadSet;
 import com.himo.himoMod.GUIS.PerunCDGUI;
 
@@ -23,7 +25,9 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 @Mod(modid = himoMod.MOD_ID, version = himoMod.MOD_VERSION)
 public class himoMod {
@@ -66,6 +70,18 @@ public class himoMod {
 				properties.setProperty("Peruny", String.valueOf(PerunCDSet.y));
 				properties.setProperty("Perunscale", String.valueOf(PerunCDSet.scale));
 
+				properties.setProperty("AimOF", String.valueOf(AimDisplaySet.ON));
+				properties.setProperty("Aimtopc", String.valueOf(AimDisplaySet.topcON));
+				properties.setProperty("Aimx", String.valueOf(AimDisplaySet.x));
+				properties.setProperty("Aimy", String.valueOf(AimDisplaySet.y));
+				properties.setProperty("Aimscale", String.valueOf(AimDisplaySet.scale));
+
+				properties.setProperty("uhckillsOF", String.valueOf(ShowUHCKillsSet.ON));
+				properties.setProperty("uhckillsOFx", String.valueOf(ShowUHCKillsSet.x));
+				properties.setProperty("uhckillsOFy", String.valueOf(ShowUHCKillsSet.y));
+				properties.setProperty("uhckillsOFlr", String.valueOf(ShowUHCKillsSet.lr));
+
+
 				properties.store(new FileOutputStream(propertiesFile), "Dont change it!");
 			} catch(Exception e) {
 				e.printStackTrace();
@@ -92,6 +108,17 @@ public class himoMod {
 			PerunCD.x = Float.parseFloat(properties.getProperty("Perunx","0"));
 			PerunCD.y = Float.parseFloat(properties.getProperty("Peruny","0"));
 			PerunCD.scale = Double.parseDouble(properties.getProperty("Perunscale","0"));
+
+			AimDisplay.AimDisplayOF = Integer.valueOf(properties.getProperty("AimOF","0"));
+			AimDisplay.topcenter = Integer.valueOf(properties.getProperty("Aimtopc","0"));
+			AimDisplay.scale = Double.parseDouble(properties.getProperty("Aimscale","0"));
+			AimDisplay.x = Float.parseFloat(properties.getProperty("Aimx","0"));
+			AimDisplay.y = Float.parseFloat(properties.getProperty("Aimy","0"));
+
+			ShowUHCKills.ShowUHCKillsOF = Integer.valueOf(properties.getProperty("uhckillsOF","0"));
+			ShowUHCKills.x = Integer.valueOf(properties.getProperty("uhckillsOFx","0"));
+			ShowUHCKills.y = Integer.valueOf(properties.getProperty("uhckillsOFy","0"));
+			ShowUHCKills.leftorright = Integer.valueOf(properties.getProperty("uhckillsOFlr","0"));
 
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -200,12 +227,17 @@ public class himoMod {
 		}
     }
 
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void onRenderTick(TickEvent.RenderTickEvent event) {
+		AimDisplay.drawRect1();
+	}
+
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onRenderGameOverlay(RenderGameOverlayEvent event) {
 		PerunCD.playPerunCD();
 		PerunCD.playPerunCDGO();
 		PerunCDGUI.testPerunCD();
 		ShowUHCKills.killsrender();
-		AimDisplay.playkaunnto();
+		//new AimDisplay().drawRect1();
 	}
 }

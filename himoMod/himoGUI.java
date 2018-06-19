@@ -4,14 +4,18 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import com.himo.himoMod.AllSettings.AimDisplaySet;
 import com.himo.himoMod.AllSettings.KillSoundSet;
 import com.himo.himoMod.AllSettings.PerunCDSet;
 import com.himo.himoMod.AllSettings.ShowHPSet;
 import com.himo.himoMod.AllSettings.ShowKillSet;
+import com.himo.himoMod.AllSettings.ShowUHCKillsSet;
 import com.himo.himoMod.AllSettings.ShowUseHeadSet;
+import com.himo.himoMod.GUIS.AimDisplayGUI;
 import com.himo.himoMod.GUIS.PerunCDGUI;
 import com.himo.himoMod.GUIS.ShowHPGUI;
 import com.himo.himoMod.GUIS.ShowKillGUI;
+import com.himo.himoMod.GUIS.ShowUHCKillsGUI;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -53,9 +57,9 @@ public class himoGUI extends GuiScreen {
 		buttonShowHP2 = new GuiButton(8, this.width / 2 + 141, this.height / 2 - 10, 59 , 20,"§bPosition");
 
 		buttonAutoKills1 = new GuiButton(9, this.width / 2 - 200, this.height / 2 + 50, 59 , 20,"buttonAutoKills1");
-		buttonAutoKills2 = new GuiButton(10, this.width / 2 - 139, this.height / 2 + 50, 59 , 20,"buttonAutoKills2");
+		buttonAutoKills2 = new GuiButton(10, this.width / 2 - 139, this.height / 2 + 50, 59 , 20,"§bPosition");
 		buttonAimDisplay1 = new GuiButton(11, this.width / 2 - 60, this.height / 2 + 50, 59 , 20,"buttonAimDisplay1");
-		buttonAimDisplay2 = new GuiButton(12, this.width / 2 + 1, this.height / 2 + 50, 59 , 20,"buttonAimDisplay2");
+		buttonAimDisplay2 = new GuiButton(12, this.width / 2 + 1, this.height / 2 + 50, 59 , 20,"§bPosition");
 
 
 		switch(himoMod.killSound) {
@@ -96,6 +100,22 @@ public class himoGUI extends GuiScreen {
 			break;
 		case PerunCDSet.ON:
 			buttonPerunCD1.displayString = "§aON";
+			break;
+		}
+		switch(ShowUHCKills.ShowUHCKillsOF) {
+		case ShowUHCKillsSet.OFF:
+			buttonAimDisplay1.displayString = "§7OFF";
+			break;
+		case ShowUHCKillsSet.ON:
+			buttonAimDisplay1.displayString = "§aON";
+			break;
+		}
+		switch(AimDisplay.AimDisplayOF) {
+		case AimDisplaySet.OFF:
+			buttonAutoKills1.displayString = "§7OFF";
+			break;
+		case AimDisplaySet.ON:
+			buttonAutoKills1.displayString = "§aON";
 			break;
 		}
 		addButtons();
@@ -221,6 +241,37 @@ public class himoGUI extends GuiScreen {
 		if(button.id == 8) {
 			new ShowHPGUI().display();
 		}
+		if(button.id == 9) {
+			//new ShowHPGUI().display();
+			switch(ShowUHCKills.ShowUHCKillsOF) {
+			case ShowUHCKillsSet.OFF:
+				buttonAutoKills1.displayString = "§aON";
+				ShowUHCKills.ShowUHCKillsOF = ShowUHCKillsSet.ON;
+				break;
+			case ShowUHCKillsSet.ON:
+				buttonAutoKills1.displayString = "§7OFF";
+				ShowUHCKills.ShowUHCKillsOF = ShowUHCKillsSet.OFF;
+				break;
+			}
+		}
+		if(button.id == 10) {
+			new ShowUHCKillsGUI().display();
+		}
+		if(button.id == 11) {
+			switch(AimDisplay.AimDisplayOF) {
+			case AimDisplaySet.OFF:
+				buttonAimDisplay1.displayString = "§aON";
+				AimDisplay.AimDisplayOF = AimDisplaySet.ON;
+				break;
+			case AimDisplaySet.ON:
+				buttonAimDisplay1.displayString = "§7OFF";
+				AimDisplay.AimDisplayOF = AimDisplaySet.OFF;
+				break;
+			}
+		}
+		if(button.id == 12) {
+			new AimDisplayGUI().display();
+		}
 	}
 	@Override
 	public void updateScreen() {
@@ -249,6 +300,11 @@ public class himoGUI extends GuiScreen {
 			himoMod.properties.setProperty("Perunx", String.valueOf(PerunCD.x));
 			himoMod.properties.setProperty("Peruny", String.valueOf(PerunCD.y));
 			himoMod.properties.setProperty("Perunscale", String.valueOf(PerunCD.scale));
+
+			himoMod.properties.setProperty("AimOF", String.valueOf(AimDisplay.AimDisplayOF));
+			himoMod.properties.setProperty("Aimx", String.valueOf(AimDisplay.x));
+			himoMod.properties.setProperty("Aimy", String.valueOf(AimDisplay.y));
+			himoMod.properties.setProperty("Aimscale", String.valueOf(AimDisplay.scale));
 			himoMod.properties.store(new FileOutputStream(himoMod.propertiesFile), "Dont change it!");
 		} catch(IOException e) {
 			e.printStackTrace();
