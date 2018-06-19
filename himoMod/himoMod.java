@@ -11,6 +11,7 @@ import com.himo.himoMod.AllSettings.PerunCDSet;
 import com.himo.himoMod.AllSettings.ShowAssistSet;
 import com.himo.himoMod.AllSettings.ShowHPSet;
 import com.himo.himoMod.AllSettings.ShowKillSet;
+import com.himo.himoMod.AllSettings.ShowTeamMateSet;
 import com.himo.himoMod.AllSettings.ShowUHCKillsSet;
 import com.himo.himoMod.AllSettings.ShowUseHeadSet;
 import com.himo.himoMod.GUIS.PerunCDGUI;
@@ -36,6 +37,7 @@ public class himoMod {
 
 	public static int killSound;
 	public static int showUseHead;
+	public static int ShowTeamMateOF;
 
 	public static Properties properties= new Properties();
 	public static File propertiesFile = new File("./himoCT.properties");
@@ -52,6 +54,7 @@ public class himoMod {
 				propertiesFile.createNewFile();//生成
 				properties.setProperty("killSound", String.valueOf(KillSoundSet.ON));//killSoundという値にKillSoundSetのONという値を入れる
 				properties.setProperty("showUseHead", String.valueOf(ShowUseHeadSet.ON));//showUseHeadという値にShowUseHeadSetのONという値を入れる
+				properties.setProperty("ShowTeamMateOF", String.valueOf(ShowTeamMateSet.ON));
 				properties.setProperty("ShowHPOF", String.valueOf(ShowHPSet.ON));
 				properties.setProperty("HPbigsmall", String.valueOf(ShowHPSet.HPsmall));//showUseHeadという値にShowUseHeadSetのONという値を入れる
 				properties.setProperty("HPleftright", String.valueOf(ShowHPSet.HPright));//HPleftrightという値にShowHPSetのHPrightという値を入れる
@@ -77,9 +80,9 @@ public class himoMod {
 				properties.setProperty("Aimscale", String.valueOf(AimDisplaySet.scale));
 
 				properties.setProperty("uhckillsOF", String.valueOf(ShowUHCKillsSet.ON));
-				properties.setProperty("uhckillsOFx", String.valueOf(ShowUHCKillsSet.x));
-				properties.setProperty("uhckillsOFy", String.valueOf(ShowUHCKillsSet.y));
-				properties.setProperty("uhckillsOFlr", String.valueOf(ShowUHCKillsSet.lr));
+				properties.setProperty("uhckillsx", String.valueOf(ShowUHCKillsSet.x));
+				properties.setProperty("uhckillsy", String.valueOf(ShowUHCKillsSet.y));
+				properties.setProperty("uhckillslr", String.valueOf(ShowUHCKillsSet.lr));
 
 
 				properties.store(new FileOutputStream(propertiesFile), "Dont change it!");
@@ -91,6 +94,7 @@ public class himoMod {
 			properties.load(new FileInputStream(propertiesFile));
 			killSound = Integer.valueOf(properties.getProperty("killSound","0"));//killSoundにpropertiesのkillSoundの値を導入
 			showUseHead = Integer.valueOf(properties.getProperty("showUseHead","0"));//showUseHeadにpropertiesのshowUseHeadの値を導入
+			ShowTeamMateOF = Integer.valueOf(properties.getProperty("ShowTeamMateOF","0"));
 			ShowHP.ShowHPOF = Integer.valueOf(properties.getProperty("ShowHPOF","0"));
 			ShowHP.HPbigsmall = Integer.valueOf(properties.getProperty("HPbigsmall","0"));
 			ShowHP.HPleftright = Integer.valueOf(properties.getProperty("HPleftright","0"));
@@ -116,9 +120,9 @@ public class himoMod {
 			AimDisplay.y = Float.parseFloat(properties.getProperty("Aimy","0"));
 
 			ShowUHCKills.ShowUHCKillsOF = Integer.valueOf(properties.getProperty("uhckillsOF","0"));
-			ShowUHCKills.x = Integer.valueOf(properties.getProperty("uhckillsOFx","0"));
-			ShowUHCKills.y = Integer.valueOf(properties.getProperty("uhckillsOFy","0"));
-			ShowUHCKills.leftorright = Integer.valueOf(properties.getProperty("uhckillsOFlr","0"));
+			ShowUHCKills.x = Integer.valueOf(properties.getProperty("uhckillsx","0"));
+			ShowUHCKills.y = Integer.valueOf(properties.getProperty("uhckillsy","0"));
+			ShowUHCKills.leftorright = Integer.valueOf(properties.getProperty("uhckillslr","0"));
 
 		} catch(Exception e) {
 			e.printStackTrace();

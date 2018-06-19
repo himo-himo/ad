@@ -9,6 +9,7 @@ import com.himo.himoMod.AllSettings.KillSoundSet;
 import com.himo.himoMod.AllSettings.PerunCDSet;
 import com.himo.himoMod.AllSettings.ShowHPSet;
 import com.himo.himoMod.AllSettings.ShowKillSet;
+import com.himo.himoMod.AllSettings.ShowTeamMateSet;
 import com.himo.himoMod.AllSettings.ShowUHCKillsSet;
 import com.himo.himoMod.AllSettings.ShowUseHeadSet;
 import com.himo.himoMod.GUIS.AimDisplayGUI;
@@ -76,6 +77,14 @@ public class himoGUI extends GuiScreen {
 			break;
 		case ShowUseHeadSet.ON:
 			buttonShowUseHead.displayString = "§aON";
+			break;
+		}
+		switch(himoMod.ShowTeamMateOF) {
+		case ShowTeamMateSet.OFF:
+			buttonShowTeamMate.displayString = "§7OFF";
+			break;
+		case ShowTeamMateSet.ON:
+			buttonShowTeamMate.displayString = "§aON";
 			break;
 		}
 		switch(ShowHP.ShowHPOF) {
@@ -196,6 +205,18 @@ public class himoGUI extends GuiScreen {
 					break;
 			}
 		}
+		if(button.id == 2) {
+			switch(himoMod.ShowTeamMateOF) {
+				case ShowTeamMateSet.OFF:
+					buttonShowTeamMate.displayString = "§aON";
+					himoMod.ShowTeamMateOF = ShowTeamMateSet.ON;
+					break;
+				case ShowTeamMateSet.ON:
+					buttonShowTeamMate.displayString = "§7OFF";
+					himoMod.ShowTeamMateOF = ShowTeamMateSet.OFF;
+					break;
+			}
+		}
 		if(button.id == 3) {
 			switch(PerunCD.PerunCDOF) {
 				case PerunCDSet.OFF:
@@ -283,6 +304,7 @@ public class himoGUI extends GuiScreen {
 			himoMod.properties.load(new FileInputStream(himoMod.propertiesFile));
 			himoMod.properties.setProperty("killSound", String.valueOf(himoMod.killSound));
 			himoMod.properties.setProperty("showUseHead", String.valueOf(himoMod.showUseHead));
+			himoMod.properties.setProperty("ShowTeamMateOF", String.valueOf(himoMod.ShowTeamMateOF));
 			himoMod.properties.setProperty("ShowHPOF", String.valueOf(ShowHP.ShowHPOF));
 			himoMod.properties.setProperty("HPbigsmall", String.valueOf(ShowHP.HPbigsmall));
 			himoMod.properties.setProperty("HPleftright", String.valueOf(ShowHP.HPleftright));
@@ -302,9 +324,16 @@ public class himoGUI extends GuiScreen {
 			himoMod.properties.setProperty("Perunscale", String.valueOf(PerunCD.scale));
 
 			himoMod.properties.setProperty("AimOF", String.valueOf(AimDisplay.AimDisplayOF));
+			himoMod.properties.setProperty("Aimtopc", String.valueOf(AimDisplay.topcenter));
 			himoMod.properties.setProperty("Aimx", String.valueOf(AimDisplay.x));
 			himoMod.properties.setProperty("Aimy", String.valueOf(AimDisplay.y));
 			himoMod.properties.setProperty("Aimscale", String.valueOf(AimDisplay.scale));
+
+			himoMod.properties.setProperty("uhckillsOF", String.valueOf(ShowUHCKills.ShowUHCKillsOF));
+			himoMod.properties.setProperty("uhckillsx", String.valueOf(ShowUHCKills.x));
+			himoMod.properties.setProperty("uhckillsy", String.valueOf(ShowUHCKills.y));
+			himoMod.properties.setProperty("uhckillslr", String.valueOf(ShowUHCKills.leftorright));
+
 			himoMod.properties.store(new FileOutputStream(himoMod.propertiesFile), "Dont change it!");
 		} catch(IOException e) {
 			e.printStackTrace();

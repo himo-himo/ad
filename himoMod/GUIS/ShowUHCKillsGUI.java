@@ -16,7 +16,6 @@ public class ShowUHCKillsGUI extends GuiScreen {
 
 	private GuiButton left;
 	private GuiButton right;
-	private static boolean kguiopen = false;
 
 	public static String[] guiStringp0karap5 = {"RitzChandaU", "furamea", "DevilX", "Refely", "Takly", "himohimo"};
 	public static String[] guiintp0karap5 = {"9", "7", "10", "6", "8", "2"};
@@ -29,7 +28,6 @@ public class ShowUHCKillsGUI extends GuiScreen {
 		}
 		left = new GuiButton(2, this.width / 2 - 22, this.height / 2 - 30, 40 , 20,"Left");
 		right = new GuiButton(3,this.width / 2 - 22, this.height / 2 - 10, 40 , 20,"Right");
-		kguiopen = true;
 
 		if (ShowUHCKills.leftorright == 0) {
 			left.displayString = "§aLeft";
@@ -71,7 +69,6 @@ public class ShowUHCKillsGUI extends GuiScreen {
 	@Override
 	public void onGuiClosed() {
 		himoGUI.saveConfig();
-		kguiopen = false;
 		for(int i=0; i< guiStringp0karap5.length; i++){
 			ShowUHCKills.Stringp0karap5[i] = "";
 			ShowUHCKills.intp0karap5[i] = "";

@@ -11,11 +11,6 @@ public class himoGUICommand extends CommandBase {
 		return 0;
 	}
 
-	/*@Override
-	public boolean canCommandSenderUseCommand(ICommandSender sender) {
-		return true;
-	}*/
-
 	@Override
 	public String getCommandName() {
 		return "himo";

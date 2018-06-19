@@ -40,7 +40,6 @@ public class AimDisplay extends GuiScreen {
 				if (caunto == 2) {
 					taima2();
 					pluskaunnto();
-					//System.out.println(new ScaledResolution(Minecraft.getMinecraft()).getScaledWidth());
 					timer.cancel();
 				}
 			}

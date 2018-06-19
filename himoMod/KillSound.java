@@ -7,16 +7,11 @@ import net.minecraft.client.Minecraft;
 public class KillSound {
 
 	public static void playKillSound() {
-		switch(himoMod.killSound) {
-		case KillSoundSet.OFF:
-			break;
-		case KillSoundSet.ON:
+		if (himoMod.killSound != KillSoundSet.ON) return;
 			Minecraft.getMinecraft().thePlayer.playSound("dig.stone", 100F, 1.2F);
 			Minecraft.getMinecraft().thePlayer.playSound("dig.stone", 100F, 1.2F);
 			Minecraft.getMinecraft().thePlayer.playSound("dig.stone", 100F, 1.2F);
 			Minecraft.getMinecraft().thePlayer.playSound("dig.stone", 100F, 1.2F);
 			Minecraft.getMinecraft().thePlayer.playSound("dig.stone", 100F, 1.2F);
-			break;
-		}
 	}
 }
