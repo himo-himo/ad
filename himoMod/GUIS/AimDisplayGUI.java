@@ -89,7 +89,7 @@ public class AimDisplayGUI extends GuiScreen {
 
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
-		if (this.width / 2 - 22 < mouseX && mouseX < this.width / 2 + 22 && this.height / 2 - 30 < mouseY && mouseY < this.height / 2 + 30) {
+		if (this.width / 2 - 22 < mouseX && mouseX < this.width / 2 + 22 && this.height / 2 - 30 < mouseY && mouseY < this.height / 2 + 30) {//クリックした位置がボタンにかぶってなかったら
 		} else {
 			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("座標OK"));
 			AimDisplay.topcenter = 0;

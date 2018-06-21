@@ -17,12 +17,12 @@ public class ShowUHCKillsGUI extends GuiScreen {
 	private GuiButton left;
 	private GuiButton right;
 
-	public static String[] guiStringp0karap5 = {"RitzChandaU", "furamea", "DevilX", "Refely", "Takly", "himohimo"};
-	public static String[] guiintp0karap5 = {"9", "7", "10", "6", "8", "2"};
+	public static String[] guiStringp0karap5 = {"RitzChandaU", "furamea", "DevilX", "Refely", "Takly", "himohimo"};//サンプル
+	public static String[] guiintp0karap5 = {"9", "7", "10", "6", "8", "2"};//サンプル
 
 	@Override
 	public void initGui() {
-		for(int i=0; i< guiStringp0karap5.length; i++){
+		for(int i=0; i< guiStringp0karap5.length; i++){//テスト用にサンプルを描画
 			ShowUHCKills.Stringp0karap5[i] = guiStringp0karap5[i];
 			ShowUHCKills.intp0karap5[i] = guiintp0karap5[i];
 		}
@@ -69,7 +69,7 @@ public class ShowUHCKillsGUI extends GuiScreen {
 	@Override
 	public void onGuiClosed() {
 		himoGUI.saveConfig();
-		for(int i=0; i< guiStringp0karap5.length; i++){
+		for(int i=0; i< guiStringp0karap5.length; i++){//テスト用に入れた値を消す
 			ShowUHCKills.Stringp0karap5[i] = "";
 			ShowUHCKills.intp0karap5[i] = "";
 		}

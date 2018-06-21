@@ -21,7 +21,7 @@ public class PerunCDGUI extends GuiScreen {
 	private GuiButton GO;
 	private GuiButton roku;
 	private static String draw = "§eGO";
-	private static boolean pguiopen = false;
+	private static boolean pguiopen = false;//GUIを開いているかの
 
 	@Override
 	public void initGui() {
