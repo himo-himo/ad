@@ -35,19 +35,18 @@ public class himoMod {
 	public static final String MOD_ID = "himomod";
 	public static final String MOD_VERSION = "1.0";
 
-	public static int killSound;
-	public static int showUseHead;
-	public static int ShowTeamMateOF;
+	public static int killSound;//killSoundがONかONじゃないかのintが入る
+	public static int showUseHead;//showUseHeadがONかONじゃないかのintが入る
+	public static int ShowTeamMateOF;//ShowTeamMateOFがONかONじゃないかのintが入る
 
 	public static Properties properties= new Properties();
 	public static File propertiesFile = new File("./himoCT.properties");
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		System.out.println("himodesu");
 		MinecraftForge.EVENT_BUS.register(this);
-		AimDisplay.taima1();
-		AimDisplay.kousinn1();
+		AimDisplay.taima1();//aimdisplayの%の起動
+		AimDisplay.kousinn1();//aimdisplayの文字更新の起動
 		ClientCommandHandler.instance.registerCommand(new himoGUICommand());
 		if(!propertiesFile.exists()) {//フォルダがなかったら
 			try {
@@ -92,8 +91,8 @@ public class himoMod {
 		}
 		try {
 			properties.load(new FileInputStream(propertiesFile));
-			killSound = Integer.valueOf(properties.getProperty("killSound","0"));//killSoundにpropertiesのkillSoundの値を導入
-			showUseHead = Integer.valueOf(properties.getProperty("showUseHead","0"));//showUseHeadにpropertiesのshowUseHeadの値を導入
+			killSound = Integer.valueOf(properties.getProperty("killSound","0"));
+			showUseHead = Integer.valueOf(properties.getProperty("showUseHead","0"));
 			ShowTeamMateOF = Integer.valueOf(properties.getProperty("ShowTeamMateOF","0"));
 			ShowHP.ShowHPOF = Integer.valueOf(properties.getProperty("ShowHPOF","0"));
 			ShowHP.HPbigsmall = Integer.valueOf(properties.getProperty("HPbigsmall","0"));
@@ -102,7 +101,7 @@ public class himoMod {
 			ShowKill.ShowKillOF = Integer.valueOf(properties.getProperty("ShowKillOF","0"));
 			ShowKill.Killbigsmall = Integer.valueOf(properties.getProperty("Killbigsmall","0"));
 			ShowKill.Killleftright = Integer.valueOf(properties.getProperty("Killleftright","0"));
-			ShowKill.Killspesu = Integer.valueOf(properties.getProperty("Killspesu","0"));//ShowHP.HPleftrightにpropertiesのHPleftrightの値を導入
+			ShowKill.Killspesu = Integer.valueOf(properties.getProperty("Killspesu","0"));
 			ShowAssist.ShowAssistOF = Integer.valueOf(properties.getProperty("ShowAssistOF","0"));
 			ShowAssist.Assistbigsmall = Integer.valueOf(properties.getProperty("Assistbigsmall","0"));
 			ShowAssist.Assistleftright = Integer.valueOf(properties.getProperty("Assistleftright","0"));
@@ -129,12 +128,12 @@ public class himoMod {
 		}
 	}
 
-	public static String removeColorCode(final String text) {
+	public static String removeColorCode(final String text) {//受け取ったchatにカラーコードはいらないのであったら消す関数
 		return text.replaceAll("§0", "").replaceAll("§1", "").replaceAll("§2", "").replaceAll("§3", "").replaceAll("§4", "").replaceAll("§5", "").replaceAll("§6", "").replaceAll("§7", "").replaceAll("§8", "").replaceAll("§9", "").replaceAll("§a", "").replaceAll("§b", "").replaceAll("§c", "").replaceAll("§d", "").replaceAll("§e", "").replaceAll("§f", "").replaceAll("§k", "").replaceAll("§l", "").replaceAll("§m", "").replaceAll("§n", "").replaceAll("§o", "").replaceAll("§r", "");
 	}
 
 	@SubscribeEvent
-	public void onChat(ClientChatReceivedEvent event) {
+	public void onChat(ClientChatReceivedEvent event) {//Chatを受け取ったらその文字すべてが引数として渡されてる
 		String[] uhckorosareta = {" was slain", " was shot", " was blown up", " was knocked off a cliff", " tried to swim in lava", " suffocated in a wall", " burned to death", " fell to their death"};
 		Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("§7 hi"));
 		String message = removeColorCode(event.message.getUnformattedText());
@@ -216,32 +215,28 @@ public class himoMod {
 	}
 
 	@SubscribeEvent
-    public void onSoundPlay(PlaySoundEvent event) {
-		//System.out.println(event.name);
+    public void onSoundPlay(PlaySoundEvent event) {//ゲーム内で音がなったら起動
 		String soundname = event.name;
-		if (soundname.equals("ambient.weather.thunder")) {
+		if (soundname.equals("ambient.weather.thunder")) {//その音が雷なのか
 			String itemnamae = Minecraft.getMinecraft().thePlayer.inventory.getCurrentItem().getDisplayName();
-			String itemnamaerem = removeColorCode(itemnamae);
-			System.out.println(itemnamae);
-			if (itemnamaerem.equals("Axe of Perun")) {
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(itemnamaerem));
-				PerunCD.playstartPerunCD();
-				PerunCD.playstartPerunCDGO();
+			String itemnamaerem = removeColorCode(itemnamae);//カラーコード消す
+			if (itemnamaerem.equals("Axe of Perun")) {//その文字がAxe of Perunか
+				PerunCD.playstartPerunCD();//5.4.3.2.1
+				PerunCD.playstartPerunCDGO();//GO
 			}
 		}
     }
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public void onRenderTick(TickEvent.RenderTickEvent event) {
-		AimDisplay.drawRect1();
+	public void onRenderTick(TickEvent.RenderTickEvent event) {//マイクラのtick 1s=20
+		AimDisplay.drawRect1();//AimDisplayのバックの半透明の四角
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
-	public void onRenderGameOverlay(RenderGameOverlayEvent event) {
-		PerunCD.playPerunCD();
-		PerunCD.playPerunCDGO();
-		PerunCDGUI.testPerunCD();
-		ShowUHCKills.killsrender();
-		//new AimDisplay().drawRect1();
+	public void onRenderGameOverlay(RenderGameOverlayEvent event) {//マイクラのFPSと同時に実行される 253 = 253回更新
+		PerunCD.playPerunCD();//ペルンの5.4.3.2.1
+		PerunCD.playPerunCDGO();//ペルンのGO
+		PerunCDGUI.testPerunCD();//ペルンのGUI
+		ShowUHCKills.killsrender();//autokillsの文字列の描画
 	}
 }

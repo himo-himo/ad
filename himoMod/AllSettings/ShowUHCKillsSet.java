@@ -5,5 +5,5 @@ public class ShowUHCKillsSet {
 	public static final int ON = 1;
 	public static final int x = 0;
 	public static final int y = 0;
-	public static final int lr = 0;
+	public static final int lr = 0;//文字列の頂点が右上か左上か()
 }

@@ -5,33 +5,34 @@ import com.himo.himoMod.AllSettings.ShowAssistSet;
 import net.minecraft.client.Minecraft;
 
 public class ShowAssist {
-	public static int ShowAssistOF;
-	public static int Assistbigsmall;
-	public static int Assistleftright;
-	public static int Assistspesu;
-	public static String supesu;
+	public static int ShowAssistOF;//ShowAssistがONかOFFか
+	public static int Assistbigsmall;//ShowAssistが大きいほうか小さい方か
+	public static int Assistleftright;//ShowAssistを左にずらすのか右にずらすのか
+	public static int Assistspesu;//どれだけ真ん中からずらすのか(int)
+	public static String supesu;//supesuhairetuの空白が入る
+	//↓すべてのパターンを配列に入れることで前はできなかった + - での空白調整を可能にした
 	public static String[] supesuhairetu = {"", " ", "  ", "   ", "    ", "     ", "      ", "       ", "        ", "         ", "          ", "           ", "            ", "             ", "              ", "               ", "                ", "                 ", "                  ", "                   ", "                    ", "                     ", "                      ", "                       ", "                        ", "                         ", "                              ", "                                   ", "                                        ", "                                             ", "                                                  ", "                                                       ", "                                                            ", "                                                                 ", "                                                                      ", "                                                                           ", "                                                                                ", "                                                                                     ", "                                                                                          ", "                                                                                               ", "                                                                                               ", "                                                                                                    "};
 
 	public static void playShowAssist() {
 		if (ShowAssistOF == ShowAssistSet.OFF) {
 		} else if (ShowAssistOF == ShowAssistSet.ON) {
-			switch(Assistbigsmall) {
-			case ShowAssistSet.Assistbig:
-				switch(Assistleftright) {
-				case ShowAssistSet.Assistleft:
+			switch(Assistbigsmall) {//ShowAssistが大きいほうか小さい方か
+			case ShowAssistSet.Assistbig://大きかったら
+				switch(Assistleftright) {//右か左か
+				case ShowAssistSet.Assistleft://左だったら
 					playShowAssistbigleft();
 				break;
-				case ShowAssistSet.Assistright:
+				case ShowAssistSet.Assistright://右だったら
 					playShowAssistbigright();
 				break;
 				}
 			break;
-			case ShowAssistSet.Assistsmall:
-				switch(Assistleftright) {
-				case ShowAssistSet.Assistleft:
+			case ShowAssistSet.Assistsmall://小さかったら
+				switch(Assistleftright) {//ShowAssistを左にずらすのか右にずらすのか
+				case ShowAssistSet.Assistleft://左だったら
 					playShowAssistsmallleft();
 				break;
-				case ShowAssistSet.Assistright:
+				case ShowAssistSet.Assistright://右だったら
 					playShowAssistsmallright();
 				break;
 				}
@@ -41,7 +42,7 @@ public class ShowAssist {
 		}
 	}
 
-	public static void playShowAssistGUI() {
+	public static void playShowAssistGUI() {//同上 * GUIで起動される方
 			switch(Assistbigsmall) {
 			case ShowAssistSet.Assistbig:
 				switch(Assistleftright) {
@@ -67,7 +68,7 @@ public class ShowAssist {
 	}
 
 	public static void supesutukuri() {
-		supesu = supesuhairetu[Assistspesu];
+		supesu = supesuhairetu[Assistspesu];//Stringのsupesuにsupesuhairetuの配列のAssistspesuの番号
 	}
 
 

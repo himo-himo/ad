@@ -20,16 +20,17 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class AimDisplay extends GuiScreen {
 
-	public static int AimDisplayOF;
-	public static int topcenter;
-	public static float x;
-	public static float y;
-	public static double scale;
+	public static int AimDisplayOF;//GUIでAimDisplayがONかOFFかの変数
+	public static int topcenter;//位置を真ん中の上になってるかの変数
+	public static float x;//x座標
+	public static float y;//y座標
+	public static double scale;//AimDisplayの大きさ
 
 	public static int tesutei = 0;
 	public static int hyouzitesutei = 0;
-	public static String byougamozi = "";
-	public static String karakodo1 = "";
+	public static String byougamozi = "";//AimDisplayGUIから受け渡された文字
+	public static String karakodo1 = "";//Aim%によって色が変わるカーラーコードが入る変数
+
 	public static void taima1() throws ParseException {
 		final Timer timer = new Timer(false);
 		TimerTask task = new TimerTask() {
@@ -63,7 +64,8 @@ public class AimDisplay extends GuiScreen {
 		};
 		timer.schedule(task, 0, 10);
 	}
-	public static void pluskaunnto() {
+
+	public static void pluskaunnto() {//プレイヤーのエイムがENTITYだったら+違ったら-1
 		if (Minecraft.getMinecraft().thePlayer == null || Minecraft.getMinecraft().theWorld == null || Minecraft.getMinecraft().objectMouseOver == null) return;
 		 MovingObjectPosition mop = Minecraft.getMinecraft().objectMouseOver;
 		 if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY) {
@@ -107,7 +109,7 @@ public class AimDisplay extends GuiScreen {
 		timer.schedule(task, 0, 200);
 	}
 
-	public static void karakodokousinn() {
+	public static void karakodokousinn() {//カラーコードを%によって変える
 		if (tesutei >= 40) karakodo1 = "§a";
 		else if (tesutei >= 20) karakodo1 = "§e";
 		else if (tesutei > 0) karakodo1 = "§c";
@@ -115,7 +117,7 @@ public class AimDisplay extends GuiScreen {
 		hyouzitesutei = tesutei;
 	}
 
-	public static void drawRect1() {
+	public static void drawRect1() {//バックの半透明の四角と%の文字描画
 		if (Minecraft.getMinecraft().thePlayer == null || Minecraft.getMinecraft().theWorld == null || Minecraft.getMinecraft().objectMouseOver == null) return;
 		if (AimDisplay.AimDisplayOF == 0) return;
 		if (!AimDisplayGUI.aguiopen) byougamozi = tesutei + "";

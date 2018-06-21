@@ -21,34 +21,32 @@ import com.himo.himoMod.GUIS.ShowUHCKillsGUI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class himoGUI extends GuiScreen {
 
-	private GuiButton buttonKillSound;
-	private GuiButton buttonShowUseHead;
-	private GuiButton buttonShowTeamMate;
-	private GuiButton buttonPerunCD1;
-	private GuiButton buttonPerunCD2;
-	private GuiButton buttonShowKill1;
-	private GuiButton buttonShowKill2;
-	private GuiButton buttonShowHP1;
-	private GuiButton buttonShowHP2;
-	private GuiButton buttonAutoKills1;
-	private GuiButton buttonAutoKills2;
-	private GuiButton buttonAimDisplay1;
-	private GuiButton buttonAimDisplay2;
+	private GuiButton buttonKillSound;//KILLサウンドのボタン
+	private GuiButton buttonShowUseHead;//ShowUseHeadのボタン
+	private GuiButton buttonShowTeamMate;//ShowTeamMateのボタン
+	private GuiButton buttonPerunCD1;//PerunCDのONOFFのボタン
+	private GuiButton buttonPerunCD2;//PerunCDのPositionのボタン
+	private GuiButton buttonShowKill1;//ShowKilのONOFFのボタン
+	private GuiButton buttonShowKill2;//ShowKilのPositionのボタン
+	private GuiButton buttonShowHP1;//ShowHPのONOFFのボタン
+	private GuiButton buttonShowHP2;//ShowHPのPositionのボタン
+	private GuiButton buttonAutoKills1;//AutoKillsのONOFFのボタン
+	private GuiButton buttonAutoKills2;//AutoKillsのPositionのボタン
+	private GuiButton buttonAimDisplay1;//AimDisplayのONOFFのボタン
+	private GuiButton buttonAimDisplay2;//AimDisplayのPositionのボタン
 
 
 	@Override
 	public void initGui() {
-		Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("adadadad"));
-		buttonKillSound = new GuiButton(0, this.width / 2 - 200, this.height / 2 - 70, 120 , 20,"himo");
-		buttonShowUseHead = new GuiButton(1, this.width / 2 - 60, this.height / 2 - 70, 120 , 20,"ON");
-		buttonShowTeamMate = new GuiButton(2, this.width / 2 + 80, this.height / 2 - 70, 120 , 20,"ON");
+		buttonKillSound = new GuiButton(0, this.width / 2 - 200, this.height / 2 - 70, 120 , 20,"buttonKillSound");
+		buttonShowUseHead = new GuiButton(1, this.width / 2 - 60, this.height / 2 - 70, 120 , 20,"buttonShowUseHead");
+		buttonShowTeamMate = new GuiButton(2, this.width / 2 + 80, this.height / 2 - 70, 120 , 20,"buttonShowTeamMate");
 
 		buttonPerunCD1 = new GuiButton(3, this.width / 2 - 200, this.height / 2 - 10, 59 , 20,"buttonPerunCD1");
 		buttonPerunCD2 = new GuiButton(4, this.width / 2 - 139, this.height / 2 - 10, 59 , 20,"§bPosition");
@@ -63,7 +61,7 @@ public class himoGUI extends GuiScreen {
 		buttonAimDisplay2 = new GuiButton(12, this.width / 2 + 1, this.height / 2 + 50, 59 , 20,"§bPosition");
 
 
-		switch(himoMod.killSound) {
+		switch(himoMod.killSound) {//killSoundがONだったらONの文字
 		case KillSoundSet.OFF:
 			buttonKillSound.displayString = "§7OFF";
 			break;
@@ -71,7 +69,8 @@ public class himoGUI extends GuiScreen {
 			buttonKillSound.displayString = "§aON";
 			break;
 		}
-		switch(himoMod.showUseHead) {
+
+		switch(himoMod.showUseHead) {//showUseHeadがONだったらONの文字
 		case ShowUseHeadSet.OFF:
 			buttonShowUseHead.displayString = "§7OFF";
 			break;
@@ -79,7 +78,7 @@ public class himoGUI extends GuiScreen {
 			buttonShowUseHead.displayString = "§aON";
 			break;
 		}
-		switch(himoMod.ShowTeamMateOF) {
+		switch(himoMod.ShowTeamMateOF) {//ShowTeamMateOFがONだったらONの文字
 		case ShowTeamMateSet.OFF:
 			buttonShowTeamMate.displayString = "§7OFF";
 			break;
@@ -87,7 +86,7 @@ public class himoGUI extends GuiScreen {
 			buttonShowTeamMate.displayString = "§aON";
 			break;
 		}
-		switch(ShowHP.ShowHPOF) {
+		switch(ShowHP.ShowHPOF) {//ShowHPOFがONだったらONの文字
 		case ShowHPSet.OFF:
 			buttonShowHP1.displayString = "§7OFF";
 			break;
@@ -95,7 +94,7 @@ public class himoGUI extends GuiScreen {
 			buttonShowHP1.displayString = "§aON";
 			break;
 		}
-		switch(ShowKill.ShowKillOF) {
+		switch(ShowKill.ShowKillOF) {//ShowKillOFがONだったらONの文字
 		case ShowKillSet.OFF:
 			buttonShowKill1.displayString = "§7OFF";
 			break;
@@ -103,7 +102,7 @@ public class himoGUI extends GuiScreen {
 			buttonShowKill1.displayString = "§aON";
 			break;
 		}
-		switch(PerunCD.PerunCDOF) {
+		switch(PerunCD.PerunCDOF) {//PerunCDOFがONだったらONの文字
 		case PerunCDSet.OFF:
 			buttonPerunCD1.displayString = "§7OFF";
 			break;
@@ -111,7 +110,7 @@ public class himoGUI extends GuiScreen {
 			buttonPerunCD1.displayString = "§aON";
 			break;
 		}
-		switch(ShowUHCKills.ShowUHCKillsOF) {
+		switch(ShowUHCKills.ShowUHCKillsOF) {//ShowUHCKillsOFがONだったらONの文字
 		case ShowUHCKillsSet.OFF:
 			buttonAimDisplay1.displayString = "§7OFF";
 			break;
@@ -119,7 +118,7 @@ public class himoGUI extends GuiScreen {
 			buttonAimDisplay1.displayString = "§aON";
 			break;
 		}
-		switch(AimDisplay.AimDisplayOF) {
+		switch(AimDisplay.AimDisplayOF) {//AimDisplayOFがONだったらONの文字
 		case AimDisplaySet.OFF:
 			buttonAutoKills1.displayString = "§7OFF";
 			break;
@@ -181,6 +180,7 @@ public class himoGUI extends GuiScreen {
 	}
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
+		//ONだったらOFF、OFFだったらON
 		if(button.id == 0) {
 			switch(himoMod.killSound) {
 				case KillSoundSet.OFF:
@@ -263,7 +263,6 @@ public class himoGUI extends GuiScreen {
 			new ShowHPGUI().display();
 		}
 		if(button.id == 9) {
-			//new ShowHPGUI().display();
 			switch(ShowUHCKills.ShowUHCKillsOF) {
 			case ShowUHCKillsSet.OFF:
 				buttonAutoKills1.displayString = "§aON";

@@ -9,16 +9,16 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 
 public class PerunCD {
-	public static int PerunCDOF;
-	public static String text = "";
-	public static String textGO = "";
-	public static float x;
-	public static float y;
-	public static double scale;
-	public static boolean perun1 = true;
-	public static boolean perun2 = true;
+	public static int PerunCDOF;//PerunCDがONかOFFか
+	public static String text = "";//関数によって5.4.3.2.1が入る
+	public static String textGO = "";//関数によってGOが入る
+	public static float x;//x座標
+	public static float y;//y座標
+	public static double scale;//文字の大きさ
+	public static boolean perun1 = true;//関数起動中にその関数を呼ばれないようにする
+	public static boolean perun2 = true;//関数起動中にその関数を呼ばれないようにする
 
-	public static void playPerunCD() {
+	public static void playPerunCD() {//5.4.3.2.1の方
 		GlStateManager.enableBlend();
 		GlStateManager.scale(PerunCD.scale, PerunCD.scale, PerunCD.scale);
 		Minecraft.getMinecraft().fontRendererObj.drawString(PerunCD.text, PerunCD.x, PerunCD.y, 0xffffffff, true);
@@ -26,7 +26,7 @@ public class PerunCD {
 		GlStateManager.popMatrix();
 		GlStateManager.pushMatrix();
 	}
-		public static void playstartPerunCD() throws ParseException {
+		public static void playstartPerunCD() throws ParseException {//カウントダウンする関数(5.4.3.2.1)
 			if (!perun1) return;
 			if (PerunCDOF != 1) return;
 			perun1= false;
@@ -61,7 +61,7 @@ public class PerunCD {
 			timer.schedule(task, 0, 1000);
 		}
 
-		public static void playPerunCDGO() {
+		public static void playPerunCDGO() {//GOの方
 			GlStateManager.enableBlend();
 			GlStateManager.scale(PerunCD.scale, PerunCD.scale, PerunCD.scale);
 			Minecraft.getMinecraft().fontRendererObj.drawString(PerunCD.textGO, PerunCD.x, PerunCD.y, 0xffffffff, true);
@@ -70,7 +70,7 @@ public class PerunCD {
 			GlStateManager.pushMatrix();
 		}
 
-		public static void playstartPerunCDGO() throws ParseException {
+		public static void playstartPerunCDGO() throws ParseException {//GOに変える関数
 			if (!perun2) return;
 			if (PerunCDOF != 1) return;
 			perun2 = false;

@@ -5,33 +5,34 @@ import com.himo.himoMod.AllSettings.ShowKillSet;
 import net.minecraft.client.Minecraft;
 
 public class ShowKill {
-	public static int ShowKillOF;
-	public static int Killbigsmall;
-	public static int Killleftright;
-	public static int Killspesu;
-	public static String supesu;
+	public static int ShowKillOF;//ONかOFFか
+	public static int Killbigsmall;//大きいほうか小さい方か
+	public static int Killleftright;//左にずらすのか右にずらすのか
+	public static int Killspesu;//どれだけ真ん中からずらすのか(int)
+	public static String supesu;//supesuhairetuの空白が入る
+	//↓すべてのパターンを配列に入れることで前はできなかった + - での空白調整を可能にした
 	public static String[] supesuhairetu = {"", " ", "  ", "   ", "    ", "     ", "      ", "       ", "        ", "         ", "          ", "           ", "            ", "             ", "              ", "               ", "                ", "                 ", "                  ", "                   ", "                    ", "                     ", "                      ", "                       ", "                        ", "                         ", "                              ", "                                   ", "                                        ", "                                             ", "                                                  ", "                                                       ", "                                                            ", "                                                                 ", "                                                                      ", "                                                                           ", "                                                                                ", "                                                                                     ", "                                                                                          ", "                                                                                               ", "                                                                                               ", "                                                                                                    "};
 
 	public static void playShowKill() {
 		if (ShowKillOF == ShowKillSet.OFF) {
 		} else if (ShowKillOF == ShowKillSet.ON) {
-			switch(Killbigsmall) {
-			case ShowKillSet.Killbig:
-				switch(Killleftright) {
-				case ShowKillSet.Killleft:
+			switch(Killbigsmall) {//大きいほうか小さい方か
+			case ShowKillSet.Killbig://大きかったら
+				switch(Killleftright) {//右か左か
+				case ShowKillSet.Killleft://左だったら
 					playShowKillbigleft();
 				break;
-				case ShowKillSet.Killright:
+				case ShowKillSet.Killright://右だったら
 					playShowKillbigright();
 				break;
 				}
 			break;
-			case ShowKillSet.Killsmall:
-				switch(Killleftright) {
-				case ShowKillSet.Killleft:
+			case ShowKillSet.Killsmall://小さかったら
+				switch(Killleftright) {//左にずらすのか右にずらすのか
+				case ShowKillSet.Killleft://左だったら
 					playShowKillsmallleft();
 				break;
-				case ShowKillSet.Killright:
+				case ShowKillSet.Killright://右だったら
 					playShowKillsmallright();
 				break;
 				}
@@ -41,7 +42,7 @@ public class ShowKill {
 		}
 	}
 
-	public static void playShowKillGUI() {
+	public static void playShowKillGUI() {//同上 * GUIで起動される方
 			switch(Killbigsmall) {
 			case ShowKillSet.Killbig:
 				switch(Killleftright) {
@@ -67,7 +68,7 @@ public class ShowKill {
 	}
 
 	public static void supesutukuri() {
-		supesu = supesuhairetu[Killspesu];
+		supesu = supesuhairetu[Killspesu];//Stringのsupesuにsupesuhairetuの配列のAssistspesuの番号
 	}
 
 
