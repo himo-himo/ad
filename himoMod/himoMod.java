@@ -53,6 +53,7 @@ public class himoMod {
 		MinecraftForge.EVENT_BUS.register(this);
 		AimDisplay.taima1();//aimdisplayの%の起動
 		AimDisplay.kousinn1();//aimdisplayの文字更新の起動
+		ShowUHCKills.kills60s();
 		ClientCommandHandler.instance.registerCommand(new himoGUICommand());
 		if(!propertiesFile.exists()) {//フォルダがなかったら
 			try {
@@ -282,7 +283,12 @@ public class himoMod {
 
 	private void adadadadada() {
         if (!Mouse.isCreated()) return;
-        if (Mouse.isButtonDown(0)) ShowUHCKills.renderreset(getMouseX(), getMouseY());
+        if (Mouse.isButtonDown(0)) {
+        	ShowUHCKills.renderreset(getMouseX(), getMouseY());//killsの部分クリックしたら""に
+        	for (int i = 0 ; i < ShowUHCKills.int60scount.length ; i++) {//クリックしたとき60のカウントを0に戻す
+        		ShowUHCKills.int60scount[i] = 0;
+    		}
+        }
     }
 
 	 @SubscribeEvent

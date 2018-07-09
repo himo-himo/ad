@@ -1,6 +1,10 @@
 package com.himo.himoMod;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import com.himo.himoMod.AllSettings.ShowUHCKillsSet;
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
@@ -14,6 +18,7 @@ public class ShowUHCKills {
 
 	public static String[] Stringp0karap5 = {"aaaaaaaaaaaaaaa", "", "", "", "", ""};//描画する名前の方
 	public static String[] intp0karap5 = {"0", "1", "2", "3", "4", "5"};//描画するキルの方
+	public static int[] int60scount = {0, 0, 0, 0, 0, 0};//描画する名前の方
 
 	public static int leftorright;//文字列の頂点を左上にするか右上にするかのint
 	public static int ShowUHCKillsOF;//ShowUHCKillsがONかOFFか
@@ -68,6 +73,7 @@ public class ShowUHCKills {
     				for(int e=0; e< Stringp0karap5.length; e++){//描画してる文字列の数回して
     					if (Stringp0karap5[u].equals(arg)) {//配列の中に同じ文字があったらそこを""にする
     						Stringp0karap5[u] = "";
+    						int60scount[u] = 0;
     					}
     				}
     				if (Stringp0karap5[u].equals("")) {//配列の中に空白があったら
@@ -91,6 +97,43 @@ public class ShowUHCKills {
     			break;
     		}
     	}
+	}
+
+	/*public static void kills60s() throws ParseException {
+		final Timer timer = new Timer(false);
+		TimerTask task = new TimerTask() {
+			@Override
+			public void run() {
+				int60sclear();
+			}
+		};
+		timer.schedule(task, 0, 1000);
+	}*/
+
+	public static void kills60s() throws ParseException {
+		final Timer timer = new Timer(false);
+		TimerTask task = new TimerTask() {
+			@Override
+			public void run() {
+				int60sclear();
+			}
+		};
+		timer.schedule(task, 0, 1000);//1秒周期でint60sclear()
+	}
+
+	public static void int60sclear() {
+		for (int i = 0 ; i < int60scount.length ; i++) {//int60scountの中に60があったらStringp0karap5とintp0karap5をその配列の部分を空白にしてカウントを0にリセット
+			if (int60scount[i] >= 60) {
+				Stringp0karap5[i] = "";
+				intp0karap5[i] = "";
+				int60scount[i] = 0;
+			}
+		}
+		for (int i = 0 ; i < Stringp0karap5.length ; i++) {//Stringp0karap5が空白じゃなかったらint60scountのその番号に1+
+			if (!Stringp0karap5[i].equals("")){
+				int60scount[i]++;
+			}
+		}
 	}
 
 	public static void allnamesakusei(String[] arg) {
