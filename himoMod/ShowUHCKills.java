@@ -12,8 +12,8 @@ public class ShowUHCKills {
 	static String[] uhcKiller = new String [ninn];//疑似2次元配列の名前の方
 	static int[] uhcKills = new int [ninn];//疑似2次元配列のキル数の方
 
-	public static String[] Stringp0karap5 = {"", "", "", "", "", ""};//描画する名前の方
-	public static String[] intp0karap5 = {"0", "1", "2", "3", "4", "5", "6"};//描画するキルの方
+	public static String[] Stringp0karap5 = {"aaaaaaaaaaaaaaa", "", "", "", "", ""};//描画する名前の方
+	public static String[] intp0karap5 = {"0", "1", "2", "3", "4", "5"};//描画するキルの方
 
 	public static int leftorright;//文字列の頂点を左上にするか右上にするかのint
 	public static int ShowUHCKillsOF;//ShowUHCKillsがONかOFFか
@@ -21,7 +21,34 @@ public class ShowUHCKills {
 	public static int x = 200;//x座標200は使われることはないが一応
 	public static int y = 0;//y座標
 
+
+	public static void renderreset(float f, float g) {//画面の文字をクリックしたときにUHCkillsの描画文字をすべて消す関数
+		int yy = 0;
+
+		for(int i=0; i< Stringp0karap5.length; i++){
+			yy += 10;
+			if (leftorright == 1) {
+				if (x - Minecraft.getMinecraft().fontRendererObj.getStringWidth(Stringp0karap5[i] + " " + intp0karap5[i]) < f && f < x && y < g && g < y + yy) {
+					for(int u=0; u< Stringp0karap5.length; u++){//テスト用にサンプルを描画
+						ShowUHCKills.Stringp0karap5[u] = "";
+						ShowUHCKills.intp0karap5[u] = "";
+					}
+				}
+			}
+			if (leftorright == 0) {
+				if (x < f && f < x + Minecraft.getMinecraft().fontRendererObj.getStringWidth(Stringp0karap5[i] + " " + intp0karap5[i]) && y < g && g < y + yy) {
+					for(int u=0; u< Stringp0karap5.length; u++){//テスト用にサンプルを描画
+						ShowUHCKills.Stringp0karap5[u] = "";
+						ShowUHCKills.intp0karap5[u] = "";
+					}
+				}
+			}
+		}
+	}
+
+
 	public static void killsrender() {//画面に描画する関数
+		if (Minecraft.getMinecraft().thePlayer == null || Minecraft.getMinecraft().theWorld == null || Minecraft.getMinecraft().objectMouseOver == null) return;
 		if(ShowUHCKillsOF == ShowUHCKillsSet.OFF) return;
 		int integer = y;
 		int integerx = x;

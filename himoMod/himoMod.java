@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Properties;
 
+import org.lwjgl.input.Mouse;
+
 import com.himo.himoMod.AllSettings.AimDisplaySet;
 import com.himo.himoMod.AllSettings.KillSoundSet;
 import com.himo.himoMod.AllSettings.PerunCDSet;
@@ -17,12 +19,16 @@ import com.himo.himoMod.AllSettings.ShowUseHeadSet;
 import com.himo.himoMod.GUIS.PerunCDGUI;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiChat;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -215,6 +221,12 @@ public class himoMod {
 	}
 
 	@SubscribeEvent
+	public void onAttack(AttackEntityEvent event) {
+		Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(event.target.getName() + ""));
+	}
+
+
+	@SubscribeEvent
     public void onSoundPlay(PlaySoundEvent event) {//ゲーム内で音がなったら起動
 		String soundname = event.name;
 		if (soundname.equals("ambient.weather.thunder")) {//その音が雷なのか
@@ -227,16 +239,100 @@ public class himoMod {
 		}
     }
 
-	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public void onRenderTick(TickEvent.RenderTickEvent event) {//マイクラのtick 1s=20
-		AimDisplay.drawRect1();//AimDisplayのバックの半透明の四角
+	/*@SubscribeEvent
+    public void onMouseEvent(MouseEvent event) {
+        if (event.button == -1) return;
+
+        if (event.button == 0 && event.buttonstate) ShowUHCKills.renderreset(event.x, event.y);
+    }*/
+
+	/*@SideOnly(Side.CLIENT)
+	@SubscribeEvent
+	public void inputMouse(InputEvent.MouseInputEvent event)
+	{
+
+		 lwjglのMouseを直接利用する.
+		 KeyBindingに登録することもできるが, 基本的にマウスのボタンは3つともバニラで使用されているので推奨されない.
+		 0 : 左クリック
+		 1 : 右クリック
+		 2 : ホイール(センター)クリック
+
+		if (Mouse.isButtonDown(0))
+		{
+			FMLClientHandler
+					.instance()
+					.getClient()
+					.thePlayer
+					.addChatMessage(new ChatComponentTranslation("Mouse is Pressed"));
+		}
+	}*/
+
+	public static float getMouseX() {
+        float mx = (float) Mouse.getX();
+        float rw = (float) new ScaledResolution(Minecraft.getMinecraft()).getScaledWidth();
+        float dw = (float) Minecraft.getMinecraft().displayWidth;
+        return mx * rw / dw;
+    }
+	public static float getMouseY() {
+        float my = (float) Mouse.getY();
+        float rh = (float) new ScaledResolution(Minecraft.getMinecraft()).getScaledHeight();
+        float dh = (float) Minecraft.getMinecraft().displayHeight;
+        return rh - my * rh / dh - 1L;
+    }
+
+	private void adadadadada() {
+        if (!Mouse.isCreated()) return;
+        if (Mouse.isButtonDown(0)) ShowUHCKills.renderreset(getMouseX(), getMouseY());
+    }
+
+	 @SubscribeEvent
+	 public void onWorldLoad(WorldEvent.Load event) {
+		PerunCD.text = "";
+		PerunCD.textGO = "";
+	 }
+
+	@SubscribeEvent
+    public void onWorldUnload(WorldEvent.Unload event) {//UHCのチームのところをもとに戻す
+		for(int i=0; i < ShowUHCKills.uhcKiller.length; i++) {//UHCのチームのところをもとに戻す
+			ShowUHCKills.uhcKiller[i] = null;
+			ShowUHCKills.uhcKills[i] = 0;
+		}
+		for (int i = 0; i < ShowUHCKills.Stringp0karap5.length; i++) {
+			ShowUHCKills.Stringp0karap5[i] = "";
+			ShowUHCKills.intp0karap5[i] = "";
+		}
+		for(int i=0; i< 40; i++){//チームの最大数の40回 回す
+    		for (int u=0; u< 3; u++) {//チームの最大人数の3回 回す
+    			ShowTeamMate.uhcteam[i][u] = null;//nullに戻す
+    		}
+    	}
+		PerunCD.perun1 = true;
+		PerunCD.perun2 = true;
+		PerunCD.text = "";
+		PerunCD.textGO = "";
+    }
+
+	@SubscribeEvent
+	public void onClientTick(TickEvent.ClientTickEvent event){
+		if (Minecraft.getMinecraft().currentScreen instanceof GuiChat) adadadadada();
 	}
 
-	@SubscribeEvent(priority = EventPriority.HIGHEST)
-	public void onRenderGameOverlay(RenderGameOverlayEvent event) {//マイクラのFPSと同時に実行される 253 = 253回更新
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void onRenderTick(TickEvent.RenderTickEvent event) {//マイクラのtick 1s=20
+		if (Minecraft.getMinecraft().thePlayer == null || Minecraft.getMinecraft().theWorld == null || Minecraft.getMinecraft().objectMouseOver == null) return;
+		AimDisplay.drawRect1();//AimDisplayのバックの半透明の四角
 		PerunCD.playPerunCD();//ペルンの5.4.3.2.1
 		PerunCD.playPerunCDGO();//ペルンのGO
 		PerunCDGUI.testPerunCD();//ペルンのGUI
 		ShowUHCKills.killsrender();//autokillsの文字列の描画
+	}
+
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	public void onRenderGameOverlay(RenderGameOverlayEvent event) {//マイクラのFPSと同時に実行される 253 = 253回更新
+		//adadadadada();
+		/*PerunCD.playPerunCD();//ペルンの5.4.3.2.1
+		PerunCD.playPerunCDGO();//ペルンのGO
+		PerunCDGUI.testPerunCD();//ペルンのGUI
+		ShowUHCKills.killsrender();//autokillsの文字列の描画*/
 	}
 }

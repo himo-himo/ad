@@ -34,20 +34,20 @@ public class AimDisplay extends GuiScreen {
 	public static void taima1() throws ParseException {
 		final Timer timer = new Timer(false);
 		TimerTask task = new TimerTask() {
-		int caunto = 0;
+		//int caunto = 0;
 			@Override
 			public void run() {
-				caunto++;
-				if (caunto == 2) {
-					taima2();
+				//caunto++;
+				//if (caunto == 2) {
+					//taima2();
 					pluskaunnto();
-					timer.cancel();
-				}
+					//timer.cancel();
+				//}
 			}
 		};
 		timer.schedule(task, 0, 10);
 	}
-	public static void taima2() throws ParseException {
+	/*public static void taima2() throws ParseException {
 		final Timer timer = new Timer(false);
 		TimerTask task = new TimerTask() {
 		int caunto = 0;
@@ -63,7 +63,7 @@ public class AimDisplay extends GuiScreen {
 			}
 		};
 		timer.schedule(task, 0, 10);
-	}
+	}*/
 
 	public static void pluskaunnto() {//プレイヤーのエイムがENTITYだったら+違ったら-1
 		if (Minecraft.getMinecraft().thePlayer == null || Minecraft.getMinecraft().theWorld == null || Minecraft.getMinecraft().objectMouseOver == null) return;
@@ -78,21 +78,21 @@ public class AimDisplay extends GuiScreen {
 	public static void kousinn1() throws ParseException {
 		final Timer timer = new Timer(false);
 		TimerTask task = new TimerTask() {
-		int caunto = 0;
+		//int caunto = 0;
 			@Override
 			public void run() {
-				caunto++;
-				if (caunto == 2) {
-					kousinn2();
+				//caunto++;
+				//if (caunto == 2) {
+					//kousinn2();
 					karakodokousinn();
 					System.out.println("kousinn1");
-					timer.cancel();
-				}
+					//timer.cancel();
+				//}
 			}
 		};
 		timer.schedule(task, 0, 200);
 	}
-	public static void kousinn2() throws ParseException {
+	/*public static void kousinn2() throws ParseException {
 		final Timer timer = new Timer(false);
 		TimerTask task = new TimerTask() {
 		int caunto = 0;
@@ -107,7 +107,7 @@ public class AimDisplay extends GuiScreen {
 			}
 		};
 		timer.schedule(task, 0, 200);
-	}
+	}*/
 
 	public static void karakodokousinn() {//カラーコードを%によって変える
 		if (tesutei >= 40) karakodo1 = "§a";

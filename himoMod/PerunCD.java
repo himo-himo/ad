@@ -84,8 +84,10 @@ public class PerunCD {
 					cnt--;
 					if (cnt == 1) {
 						karakodo = "§e";
+						if (Minecraft.getMinecraft().thePlayer != null || Minecraft.getMinecraft().theWorld != null || Minecraft.getMinecraft().objectMouseOver != null) {
 						PerunCD.textGO = karakodo + "GO";
 						Minecraft.getMinecraft().thePlayer.playSound("item.fireCharge.use", 100F, 1F);
+						}
 						perun2 = true;
 					}
 					//5回実行で停止
